@@ -32,6 +32,12 @@ public class MainGame {
                     System.out.println(i.name + " won the game.");
                     gameOver = true;
                     break;
+                } else if (board.snakes.get(i.getPosition()) != null){
+                    i.setPosition(board.snakes.get(i.getPosition()));
+                    System.out.println("you have encountered a snake and have been moved to position " + i.getPosition());
+                } else if (board.ladders.get(i.getPosition()) != null){
+                    i.setPosition(board.ladders.get(i.getPosition()));
+                    System.out.println("you have climbed a ladder and your new position is: " + i.getPosition());
                 }
              }
         }

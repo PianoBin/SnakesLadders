@@ -1,25 +1,39 @@
+import java.util.AbstractMap;
+import java.util.*;
+import java.util.HashMap;
 public class BoardGame {
 
-   public Player[] myBoard = new Player[100];
+ public Player[] myBoard = new Player[100];
 
-    // first value: value landed at
-    // second value: value taken to
+ // first value: value landed at
+ // second value: value taken to
 
-    //hardcoded snakes
-    int[] snake1 = {43, 16};
-    int[] snake2 = {55, 34};
-    int[] snake3 = {70, 48};
-    int[] snake4 = {78, 42};
-    int[] snake5 = {95, 73};
-    int[] snake6 = {96, 82};
+ //hardcoded snakes map
 
-    //hardcoded ladders
-    int[] ladder1 = {6, 27};
-    int[] ladder2 = {9, 50};
-    int[] ladder3 = {20, 39};
-    int[] ladder4 = {25, 57};
-    int[] ladder5 = {53, 72};
-    int[] ladder6 = {54, 85};
-    int[] ladder7 = {61, 82};
+ public HashMap<Integer, Integer> snakes = new HashMap<>();
+
+    {
+        snakes.put(43, 16);
+        snakes.put(55, 34);
+        snakes.put(70, 48);
+        snakes.put(78, 42);
+        snakes.put(95, 73);
+        snakes.put(96, 82);
+    }
+
+
+
+ public HashMap<Integer, Integer> ladders = new HashMap<>();
+    {
+         ladders.put(6, 27);
+         ladders.put(9, 50);
+         ladders.put(20, 39);
+         ladders.put(25, 57);
+         ladders.put(53, 72);
+         ladders.put(54, 85);
+         ladders.put(61, 82);
+    }
 
 }
+
+

@@ -23,6 +23,7 @@ public class Player {
 
     public int getPosition() {
         return position;
-    }
+    } //getter
+    public void setPosition(int x) {position = x;} //setter
 }
 
