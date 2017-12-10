@@ -1,6 +1,6 @@
 public class Player {
-    public static String name;
-    private static int position;
+    public String name;
+    private int position;
 
     public Player(){
 

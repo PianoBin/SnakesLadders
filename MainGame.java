@@ -17,11 +17,13 @@ public class MainGame {
         for (int i = 0; i < numPlayers; i++){
             System.out.println("Enter the name of Player " + (i+1) + ": ");
             String name = scan.next();
+            System.out.println(name);
             playerArray[i] = new Player(name);
+            System.out.println(playerArray[i].name);
         }
 
-        for (Player i : playerArray) {
-        	System.out.println(i.name);
+        for (int i = 0; i < numPlayers; i++) {
+        	System.out.println(playerArray[i].name);
         }
 
         boolean gameOver = false;
@@ -34,6 +36,7 @@ public class MainGame {
                 board.myBoard[i.getPosition() + 1] = i;
 
                 if (i.getPosition() == 100){
+                    System.out.println(i.name + " won the game.");
                     gameOver = true;
                 }
              }
@@ -41,3 +44,4 @@ public class MainGame {
 
     }
 }
+
