@@ -17,13 +17,7 @@ public class MainGame {
         for (int i = 0; i < numPlayers; i++){
             System.out.println("Enter the name of Player " + (i+1) + ": ");
             String name = scan.next();
-            System.out.println(name);
             playerArray[i] = new Player(name);
-            System.out.println(playerArray[i].name);
-        }
-
-        for (int i = 0; i < numPlayers; i++) {
-        	System.out.println(playerArray[i].name);
         }
 
         boolean gameOver = false;
@@ -31,17 +25,18 @@ public class MainGame {
         while (!gameOver){
             for (Player i : playerArray){
                 int moveBy = d.roll(); //roll the dice
-                System.out.println("move by" + moveBy);
                 i.move(moveBy); //move the player by the value rolled by the dice
-                board.myBoard[i.getPosition() + 1] = i;
+                board.myBoard[i.getPosition()] = i;
 
-                if (i.getPosition() == 100){
+                if (i.getPosition() == 99){
                     System.out.println(i.name + " won the game.");
                     gameOver = true;
+                    break;
                 }
              }
         }
 
     }
 }
+
 
