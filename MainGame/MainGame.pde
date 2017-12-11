@@ -9,6 +9,7 @@ Player[] playerArray;
 BoardGame board;
 Dice d;
 ControlFont font;
+int playerTurn;
  
 void setup() {
   background(0);
@@ -41,6 +42,7 @@ void setup() {
   text("Please enter the player names (up to 4 players):", 10, 80);
   
   gameOver = false;
+  playerTurn = 0;
 }
  
  
@@ -98,30 +100,31 @@ void drawBoard() {
   cp6.getController("Roll").getCaptionLabel().setFont(font).toUpperCase(false).setSize(20);
 }
 
-void doRolls() {
-  for (Player i : playerArray){
-    int moveBy = d.roll(); //roll the dice
-    i.move(moveBy); //move the player by the value rolled by the dice
-    board.myBoard[i.getPosition()] = i;
-    System.out.println(i.name + " rolled " + moveBy + "! ");
-    System.out.println(i.name + " is now at position " + i.getPosition());
-    
-    fill(255);
-    text(i.name + " rolled " + moveBy + "! ", 500, 250);
+void doRolls(int x) {
+  Player i = playerArray[x];
+  int moveBy = d.roll(); //roll the dice
+  i.move(moveBy); //move the player by the value rolled by the dice
+  board.myBoard[i.getPosition()] = i;
+  System.out.println(i.name + " rolled " + moveBy + "! ");
+  System.out.println(i.name + " is now at position " + i.getPosition());
+  
+  fill(255);
+  textFont(f, 24);
+  text(i.name + " rolled " + moveBy + "! ", 500, 250);
 
-    if (i.getPosition() == 99){
-        System.out.println(i.name + " won the game.");
-        gameOver = true;
-        break;
-    } else if (board.snakes.get(i.getPosition()) != null){
-        i.setPosition(board.snakes.get(i.getPosition()));
-        System.out.println(i.name + " has encountered a snake and is now at position " + (i.getPosition() + 1));
-        text(i.name + " has encountered a snake and is now at position " + (i.getPosition() + 1), 500, 300);
-    } else if (board.ladders.get(i.getPosition()) != null){
-        i.setPosition(board.ladders.get(i.getPosition()));
-        System.out.println(i.name + " has climbed a ladder and is now at position " + (i.getPosition() + 1));
-        text(i.name + " has climbed a ladder and is now at position " + (i.getPosition() + 1), 500, 300);
-    }
+  if (i.getPosition() == 99){
+      System.out.println(i.name + " won the game.");
+      gameOver = true;
+  } else if (board.snakes.get(i.getPosition()) != null){
+      i.setPosition(board.snakes.get(i.getPosition()));
+      System.out.println(i.name + " has encountered a snake and is now at position " + (i.getPosition() + 1));
+      textFont(f, 24);
+      text(i.name + " has encountered a snake and is now at position " + (i.getPosition() + 1), 500, 300);
+  } else if (board.ladders.get(i.getPosition()) != null){
+      i.setPosition(board.ladders.get(i.getPosition()));
+      System.out.println(i.name + " has climbed a ladder and is now at position " + (i.getPosition() + 1));
+      textFont(f, 24);
+      text(i.name + " has climbed a ladder and is now at position " + (i.getPosition() + 1), 500, 300);
   }
 }
  
@@ -166,6 +169,7 @@ public void Roll(int value) {
       rect(x, y, 40, 40);
       fill(0);
       int square = i * 10 + j + 1;
+      textFont(f, 24);
       text(square, x, y + 40);
     }
   }
@@ -175,9 +179,19 @@ public void Roll(int value) {
     int x = 500;
     int y = k * 30 + 80;
     fill(255);
+    textFont(f, 24);
     text(playerArray[k].name + " at " + (playerArray[k].getPosition() + 1), x, y);
+    
+    if ((playerArray[k].getPosition() + 1) == 100) {
+      text(playerArray[k].name + " wins!", x, 250);
+    } 
   }
   if (!gameOver) {
-    doRolls();
+    doRolls(playerTurn);
+    if (playerTurn == playerArray.length - 1) {
+      playerTurn = 0;
+    } else {
+      playerTurn++;
+    }
   }
 }
