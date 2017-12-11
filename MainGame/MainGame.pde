@@ -61,22 +61,22 @@ void initGame() {
   
   if (!url1.equals("")) {
     playerCount += 1;
-    tempArray[0] = new Player(url1);
+    tempArray[0] = new Player(url1, 160, 32, 240);
   }
   
   if (!url2.equals("")) {
     playerCount += 1;
-    tempArray[1] = new Player(url2);
+    tempArray[1] = new Player(url2, 102, 205, 170);
   }
   
   if (!url3.equals("")) {
     playerCount += 1;
-    tempArray[2] = new Player(url3);
+    tempArray[2] = new Player(url3, 49, 79, 79);
   }
   
   if (!url4.equals("")) {
     playerCount += 1;
-    tempArray[3] = new Player(url4);
+    tempArray[3] = new Player(url4, 255, 165, 0);
   }
   
   //System.out.println(playerCount);
@@ -105,24 +105,24 @@ void doRolls(int x) {
   int moveBy = d.roll(); //roll the dice
   i.move(moveBy); //move the player by the value rolled by the dice
   board.myBoard[i.getPosition()] = i;
-  System.out.println(i.name + " rolled " + moveBy + "! ");
-  System.out.println(i.name + " is now at position " + i.getPosition());
+  //System.out.println(i.name + " rolled " + moveBy + "! ");
+  //System.out.println(i.name + " is now at position " + i.getPosition());
   
   fill(255);
   textFont(f, 24);
   text(i.name + " rolled " + moveBy + "! ", 500, 250);
 
   if (i.getPosition() == 99){
-      System.out.println(i.name + " won the game.");
+      //System.out.println(i.name + " won the game.");
       gameOver = true;
   } else if (board.snakes.get(i.getPosition()) != null){
       i.setPosition(board.snakes.get(i.getPosition()));
-      System.out.println(i.name + " has encountered a snake and is now at position " + (i.getPosition() + 1));
+      //System.out.println(i.name + " has encountered a snake and is now at position " + (i.getPosition() + 1));
       textFont(f, 24);
       text(i.name + " has encountered a snake and is now at position " + (i.getPosition() + 1), 500, 300);
   } else if (board.ladders.get(i.getPosition()) != null){
       i.setPosition(board.ladders.get(i.getPosition()));
-      System.out.println(i.name + " has climbed a ladder and is now at position " + (i.getPosition() + 1));
+      //System.out.println(i.name + " has climbed a ladder and is now at position " + (i.getPosition() + 1));
       textFont(f, 24);
       text(i.name + " has climbed a ladder and is now at position " + (i.getPosition() + 1), 500, 300);
   }
@@ -147,7 +147,7 @@ void Submit() {
   background(0);
   
   initGame();
-  System.out.println("Drawing board");
+  //System.out.println("Drawing board");
   drawBoard();
 }
 
@@ -164,13 +164,50 @@ public void Roll(int value) {
     for (int j = 0; j < 10; j++) {
       int x = i * 40 + 20;
       int y = j * 40 + 75;
-      fill(255);
-      stroke(0);
-      rect(x, y, 40, 40);
-      fill(0);
       int square = i * 10 + j + 1;
+      
+      if (square == 43 || square == 55 || square == 70 || square == 78 || square == 95 || square == 96) {
+        //fill snakes
+        fill(255, 0, 0);
+        stroke(0);
+        rect(x, y, 40, 40);
+      } else if (square == 6 || square == 9 || square == 20 || square == 25 || square == 53 || square == 54 || square == 61) {
+        //fill ladders
+        fill(0, 255, 0);
+        stroke(0);
+        rect(x, y, 40, 40);
+      } else if (square == 100) {
+        fill(255, 255, 0);
+        stroke(0);
+        rect(x, y, 40, 40);
+      } else if (square == 1) {
+        fill(131, 139, 131);
+        stroke(0);
+        rect(x, y, 40, 40);
+      } else {
+        //fill other
+        fill(255);
+        stroke(0);
+        rect(x, y, 40, 40);
+      }
+      
+      for (int count = 0; count < playerArray.length; count++) {
+        Player p = playerArray[count];
+        if (square == p.getPosition() + 1) {
+          fill(p.red, p.green, p.blue);
+          stroke(0);
+          rect(x, y, 40, 40);
+          rect(475, 60 + (30 * count), 20, 20);
+        }
+      }
+      
+      fill(0);
       textFont(f, 24);
-      text(square, x, y + 40);
+      if (square == 100) {
+        text("W", x + 5, y + 30);
+      } else {
+        text(square, x + 5, y + 30);
+      }
     }
   }
   if (!gameOver) {
