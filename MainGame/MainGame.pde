@@ -9,10 +9,10 @@ Player[] playerArray;
 BoardGame board;
 Dice d;
 ControlFont font;
-boolean rolled;
  
 void setup() {
-  size(700, 500);
+  background(0);
+  size(1200, 500);
   f = createFont("Arial",16,true);
   font = new ControlFont(f, 16);
   cp5 = new ControlP5(this);
@@ -35,45 +35,21 @@ void setup() {
   cp5.getController("Player 4 Name").getValueLabel().setFont(font);
   cp5.getController("Submit").getCaptionLabel().setFont(font).toUpperCase(false).setSize(20);
   
+  textFont(f, 24);
+  fill(255);
+  text("Welcome to Snakes and Ladders! Built by Rishu and Shoji", 10, 50);
+  text("Please enter the player names (up to 4 players):", 10, 80);
+  
   gameOver = false;
 }
  
  
 void draw () {
-  background(0);
-  if (url1.equals("") && url2.equals("") && url3.equals("") && url4.equals("")) {
-    textFont(f, 24);
+  /*if (gameOver) {
+    background(0);
     fill(255);
-    text("Welcome to Snakes and Ladders! Built by Rishu and Shoji", 10, 50);
-    text("Please enter the player names (up to 4 players):", 10, 80);
-  } else {
-    initGame();
-    drawBoard();
-    while (!gameOver) {
-      if (rolled) {
-        for (Player i : playerArray){
-          int moveBy = d.roll(); //roll the dice
-          i.move(moveBy); //move the player by the value rolled by the dice
-          board.myBoard[i.getPosition()] = i;
-          System.out.println(i.name + " rolled " + moveBy + "! ");
-          System.out.println(i.name + " is now at position " + i.getPosition());
-  
-          if (i.getPosition() == 99){
-              System.out.println(i.name + " won the game.");
-              gameOver = true;
-              break;
-          } else if (board.snakes.get(i.getPosition()) != null){
-              i.setPosition(board.snakes.get(i.getPosition()));
-              System.out.println(i.name + " has encountered a snake and is now at position " + i.getPosition());
-          } else if (board.ladders.get(i.getPosition()) != null){
-              i.setPosition(board.ladders.get(i.getPosition()));
-              System.out.println(i.name + " has climbed a ladder and is now at position " + i.getPosition());
-          }
-        }
-      rolled = false;
-      }
-    }
-  }
+    text("Player wins!", 200, 200);
+  }*/
 }
 
 void initGame() {
@@ -116,6 +92,68 @@ void initGame() {
 }
 
 void drawBoard() {
+  background(0);
+  cp6 = new ControlP5(this);
+  cp6.addButton("Roll").setPosition(500, 400).setSize(100, 40).setValue(0).activateBy(ControlP5.RELEASE); 
+  cp6.getController("Roll").getCaptionLabel().setFont(font).toUpperCase(false).setSize(20);
+}
+
+void doRolls() {
+  for (Player i : playerArray){
+    int moveBy = d.roll(); //roll the dice
+    i.move(moveBy); //move the player by the value rolled by the dice
+    board.myBoard[i.getPosition()] = i;
+    System.out.println(i.name + " rolled " + moveBy + "! ");
+    System.out.println(i.name + " is now at position " + i.getPosition());
+    
+    fill(255);
+    text(i.name + " rolled " + moveBy + "! ", 500, 250);
+
+    if (i.getPosition() == 99){
+        System.out.println(i.name + " won the game.");
+        gameOver = true;
+        break;
+    } else if (board.snakes.get(i.getPosition()) != null){
+        i.setPosition(board.snakes.get(i.getPosition()));
+        System.out.println(i.name + " has encountered a snake and is now at position " + (i.getPosition() + 1));
+        text(i.name + " has encountered a snake and is now at position " + (i.getPosition() + 1), 500, 300);
+    } else if (board.ladders.get(i.getPosition()) != null){
+        i.setPosition(board.ladders.get(i.getPosition()));
+        System.out.println(i.name + " has climbed a ladder and is now at position " + (i.getPosition() + 1));
+        text(i.name + " has climbed a ladder and is now at position " + (i.getPosition() + 1), 500, 300);
+    }
+  }
+}
+ 
+void Submit() {
+  print("the following text was submitted :");
+  url1 = cp5.get(Textfield.class,"Player 1 Name").getText();
+  url2 = cp5.get(Textfield.class,"Player 2 Name").getText();
+  url3 = cp5.get(Textfield.class,"Player 3 Name").getText();
+  url4 = cp5.get(Textfield.class,"Player 4 Name").getText();
+  print(" textInput 1 = " + url1);
+  print(", textInput 2 = " + url2);
+  print(", textInput 3 = " + url3);
+  print(", textInput 4 = " + url4);
+  println();
+  cp5.remove("Player 1 Name");
+  cp5.remove("Player 2 Name");
+  cp5.remove("Player 3 Name");
+  cp5.remove("Player 4 Name");
+  cp5.remove("Submit");
+  background(0);
+  
+  initGame();
+  System.out.println("Drawing board");
+  drawBoard();
+}
+
+public void controlEvent(ControlEvent theEvent) {
+  
+}
+
+public void Roll(int value) {
+  background(0);
   textFont(f, 24);
   fill(255);
   text("Snakes and Ladders", 20, 50);
@@ -137,33 +175,9 @@ void drawBoard() {
     int x = 500;
     int y = k * 30 + 80;
     fill(255);
-    text(playerArray[k].name + " at " + playerArray[k].getPosition(), x, y);
+    text(playerArray[k].name + " at " + (playerArray[k].getPosition() + 1), x, y);
   }
-  cp6 = new ControlP5(this);
-  cp6.addButton("Roll").setPosition(500, 400).setSize(100, 40); 
-  cp6.getController("Roll").getCaptionLabel().setFont(font).toUpperCase(false).setSize(20);
-  rolled = true;
-}
- 
-void Submit() {
-  print("the following text was submitted :");
-  url1 = cp5.get(Textfield.class,"Player 1 Name").getText();
-  url2 = cp5.get(Textfield.class,"Player 2 Name").getText();
-  url3 = cp5.get(Textfield.class,"Player 3 Name").getText();
-  url4 = cp5.get(Textfield.class,"Player 4 Name").getText();
-  print(" textInput 1 = " + url1);
-  print(", textInput 2 = " + url2);
-  print(", textInput 3 = " + url3);
-  print(", textInput 4 = " + url4);
-  println();
-  cp5.remove("Player 1 Name");
-  cp5.remove("Player 2 Name");
-  cp5.remove("Player 3 Name");
-  cp5.remove("Player 4 Name");
-  cp5.remove("Submit");
-  background(0);
-}
-
-void Roll() {
-  rolled = true;
+  if (!gameOver) {
+    doRolls();
+  }
 }
