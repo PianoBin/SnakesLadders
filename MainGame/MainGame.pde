@@ -173,6 +173,14 @@ public void Roll(int value) {
       text(square, x, y + 40);
     }
   }
+  if (!gameOver) {
+    doRolls(playerTurn);
+    if (playerTurn == playerArray.length - 1) {
+      playerTurn = 0;
+    } else {
+      playerTurn++;
+    }
+  }
   fill(255);
   text("POSITIONS:", 500, 50);
   for (int k = 0; k < playerArray.length; k++) {
@@ -185,13 +193,5 @@ public void Roll(int value) {
     if ((playerArray[k].getPosition() + 1) == 100) {
       text(playerArray[k].name + " wins!", x, 250);
     } 
-  }
-  if (!gameOver) {
-    doRolls(playerTurn);
-    if (playerTurn == playerArray.length - 1) {
-      playerTurn = 0;
-    } else {
-      playerTurn++;
-    }
   }
 }
