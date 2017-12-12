@@ -19,8 +19,8 @@ public class Player {
     }
 
     public boolean move(int x) {
-        if ((position + x) > 99 ) {
-            return false;
+        if ((position + x) > 100 ) {
+            return true;
         } else {
             position += x;
             return true;

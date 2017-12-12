@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class BoardGame {
 
- public Player[] myBoard = new Player[100];
+ public Player[] myBoard = new Player[102];
 
  // first value: value landed at
  // second value: value taken to

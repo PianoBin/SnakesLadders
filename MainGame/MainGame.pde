@@ -112,7 +112,7 @@ void doRolls(int x) {
   textFont(f, 24);
   text(i.name + " rolled " + moveBy + "! ", 500, 250);
 
-  if (i.getPosition() == 99){
+  if (i.getPosition() == 100){
       //System.out.println(i.name + " won the game.");
       gameOver = true;
   } else if (board.snakes.get(i.getPosition()) != null){
@@ -257,7 +257,7 @@ public void Roll(int value) {
     }
   }
   
-  if (!gameOver) {
+  if(!gameOver) {
     doRolls(playerTurn);
     if (playerTurn == playerArray.length - 1) {
       playerTurn = 0;
@@ -274,8 +274,10 @@ public void Roll(int value) {
     textFont(f, 24);
     text(playerArray[k].name + " at " + (playerArray[k].getPosition()), x, y);
     
-    if ((playerArray[k].getPosition() + 1) == 100) {
-      text(playerArray[k].name + " wins!", x, 250);
+    if ((playerArray[k].getPosition()) == 100) {
+      text(playerArray[k].name + " wins!", x, 300);
+      gameOver = true;
+      break;
     } 
   }
   
