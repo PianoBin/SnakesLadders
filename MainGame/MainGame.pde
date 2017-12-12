@@ -119,12 +119,12 @@ void doRolls(int x) {
       i.setPosition(board.snakes.get(i.getPosition()));
       //System.out.println(i.name + " has encountered a snake and is now at position " + (i.getPosition() + 1));
       textFont(f, 24);
-      text(i.name + " has encountered a snake and is now at position " + (i.getPosition() + 1), 500, 300);
+      text(i.name + " has encountered a snake and is now at position " + i.getPosition(), 500, 300);
   } else if (board.ladders.get(i.getPosition()) != null){
       i.setPosition(board.ladders.get(i.getPosition()));
       //System.out.println(i.name + " has climbed a ladder and is now at position " + (i.getPosition() + 1));
       textFont(f, 24);
-      text(i.name + " has climbed a ladder and is now at position " + (i.getPosition() + 1), 500, 300);
+      text(i.name + " has climbed a ladder and is now at position " + i.getPosition(), 500, 300);
   }
 }
  
@@ -199,8 +199,8 @@ public void Roll(int value) {
       
       for (int count = 0; count < playerArray.length; count++) {
         Player p = playerArray[count];
-        if (square == p.getPosition() + 1) {
-          fill(p.red, p.green, p.blue);
+        if (square == p.getPosition()) {
+          fill(255);
           stroke(0);
           rect(x, y, 40, 40);
           rect(475, 60 + (30 * count), 20, 20);
@@ -220,11 +220,23 @@ public void Roll(int value) {
   //drawing snakes
   stroke(255, 0, 0);
   strokeWeight(4);
-  line(200, 175, 80, 255);
+  line(4 * 40 + 20 + 20, 3 * 40 + 75 - 20, 1 * 40 + 20 + 20, 5 * 40 + 75 - 20);
+  line(5 * 40 + 20 + 20, 5 * 40 + 75 + 20, 3 * 40 + 20 + 20, 3 * 40 + 75 + 140); //fix
+  line(7 * 40 + 20 - 20, 0 * 40 + 75 + 380, 4 * 40 + 20 + 20, 7 * 40 + 75 + 20); //fix
+  line(7 * 40 + 20 + 20, 8 * 40 + 75 - 220, 4 * 40 + 20 + 20, 1 * 40 + 75 + 20); //fix
+  line(9 * 40 + 20 + 20, 5 * 40 + 75 + 20, 7 * 40 + 20 + 20, 2 * 40 + 75 + 220);
+  line(9 * 40 + 20 + 20, 6 * 40 + 75 - 60, 8 * 40 + 20 + 20, 1 * 40 + 75 + 20);
   
   //drawing ladders 
   stroke(0, 255, 0);
   strokeWeight(4);
+  line(0 * 40 + 20 + 20, 6 * 40 + 75 - 20, 2 * 40 + 20 + 20, 7 * 40 + 75 - 20);
+  line(0 * 40 + 20 + 20, 9 * 40 + 75 - 20, 5 * 40 + 20 - 20, 0 * 40 + 75 + 380);
+  line(2 * 40 + 20 - 20, 0 * 40 + 75 + 20, 3 * 40 + 20 + 20, 9 * 40 + 75 - 300);
+  line(2 * 40 + 20 + 20, 5 * 40 + 75 - 20, 5 * 40 + 20 + 20, 7 * 40 + 75 - 140);
+  line(5 * 40 + 20 + 20, 3 * 40 + 75 + 180, 7 * 40 + 20 + 20, 2 * 40 + 75 + 260);
+  line(5 * 40 + 20 + 20, 4 * 40 + 75 + 100, 8 * 40 + 20 + 20, 5 * 40 + 75 - 20);
+  line(6 * 40 + 20 + 20, 1 * 40 + 75 - 20, 8 * 40 + 20 + 20, 2 * 40 + 75 - 20);
   
   for (int i = 0; i < 10; i++) {
     for (int j = 0; j < 10; j++) {
@@ -260,10 +272,33 @@ public void Roll(int value) {
     int y = k * 30 + 80;
     fill(255);
     textFont(f, 24);
-    text(playerArray[k].name + " at " + (playerArray[k].getPosition() + 1), x, y);
+    text(playerArray[k].name + " at " + (playerArray[k].getPosition()), x, y);
     
     if ((playerArray[k].getPosition() + 1) == 100) {
       text(playerArray[k].name + " wins!", x, 250);
     } 
+  }
+  
+  for (int i = 0; i < 10; i++) {
+    for (int j = 0; j < 10; j++) {
+      int x = i * 40 + 20;
+      int y = j * 40 + 75;
+      int square = i * 10 + j + 1;
+      if (i % 2 == 1) {
+          square = ((i * 10) + 10) - j;
+      }
+      
+      strokeWeight(1);
+      
+      for (int count = 0; count < playerArray.length; count++) {
+        Player p = playerArray[count];
+        if (square == p.getPosition()) {
+          fill(p.red, p.green, p.blue);
+          stroke(0);
+          rect(x, y, 40, 40);
+          rect(475, 60 + (30 * count), 20, 20);
+        }
+      }
+    }
   }
 }
