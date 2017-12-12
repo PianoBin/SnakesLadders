@@ -165,6 +165,9 @@ public void Roll(int value) {
       int x = i * 40 + 20;
       int y = j * 40 + 75;
       int square = i * 10 + j + 1;
+      if (i % 2 == 1) {
+          square = ((i * 10) + 10) - j;
+      }
       
       if (square == 43 || square == 55 || square == 70 || square == 78 || square == 95 || square == 96) {
         //fill snakes
