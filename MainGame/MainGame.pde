@@ -160,6 +160,7 @@ public void Roll(int value) {
   textFont(f, 24);
   fill(255);
   text("Snakes and Ladders", 20, 50);
+  
   for (int i = 0; i < 10; i++) {
     for (int j = 0; j < 10; j++) {
       int x = i * 40 + 20;
@@ -168,6 +169,8 @@ public void Roll(int value) {
       if (i % 2 == 1) {
           square = ((i * 10) + 10) - j;
       }
+      
+      strokeWeight(1);
       
       if (square == 43 || square == 55 || square == 70 || square == 78 || square == 95 || square == 96) {
         //fill snakes
@@ -213,6 +216,35 @@ public void Roll(int value) {
       }
     }
   }
+  
+  //drawing snakes
+  stroke(255, 0, 0);
+  strokeWeight(4);
+  line(200, 175, 80, 255);
+  
+  //drawing ladders 
+  stroke(0, 255, 0);
+  strokeWeight(4);
+  
+  for (int i = 0; i < 10; i++) {
+    for (int j = 0; j < 10; j++) {
+      int x = i * 40 + 20;
+      int y = j * 40 + 75;
+      int square = i * 10 + j + 1;
+      if (i % 2 == 1) {
+          square = ((i * 10) + 10) - j;
+      }
+      
+      fill(0);
+      textFont(f, 24);
+      if (square == 100) {
+        text("W", x + 5, y + 30);
+      } else {
+        text(square, x + 5, y + 30);
+      }
+    }
+  }
+  
   if (!gameOver) {
     doRolls(playerTurn);
     if (playerTurn == playerArray.length - 1) {
